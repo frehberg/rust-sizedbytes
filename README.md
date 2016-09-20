@@ -33,3 +33,16 @@ fn main() {
    }
 }
 ```
+
+This feature is analog to the feature in C, where the function 'sizeof' is deriving the const length of the embedded string during compile time, which can be used to initialize other buffer of specific constant size.
+```C
+char CONST_DATA[] = "0123456789";
+
+char buffer[sizeof(CONST_DATA) * 2];
+
+int i=0;
+for (i=0; i<sizeof(CONST_DATA); ++i)
+{
+    buffer[i*2] = CONST_DATA[i];
+}
+```
