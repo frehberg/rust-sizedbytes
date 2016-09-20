@@ -24,7 +24,8 @@ extern crate sizedbytes;
 use sizedbytes::SizedBytes;
 
 fn main() {
-   const CONST_DATA : SizedBytes = sized_bytes!(b"0123456789");
+   const CONST_DATA : SizedBytes = sized_bytes!(b"0123456789"); // size 10, not nul-terminated
+   // equivalant  to               sized_bytes!([ 48u8, 49u8, 50u8, 51u8, 52u8 53u8 54u8, 55u8, 56u8, 57u8 ])
    let runtime_bytes = b"0123456789";
 
    let mut buffer :  [u8; 2 * CONST_DATA.size ] = [0; 2 * CONST_DATA.size ];
@@ -36,12 +37,13 @@ fn main() {
 
 This feature is analog to the feature in C, where the function 'sizeof' is deriving the const length of the embedded string during compile time, which can be used to initialize other buffer of specific constant size.
 ```C
-char CONST_DATA[] = "0123456789";
-
+const char CONST_DATA[] = "0123456789"; // size 11, as nul-terminated
+/* equivalant to: char CONST_DATA[] = ['0','1','2','3','4','5','6','7','8','9', '\0'] */
 char buffer[sizeof(CONST_DATA) * 2];
+const int N = sizeof(CONST_DATA) - 1 ;
 
 int i=0;
-for (i=0; i<sizeof(CONST_DATA); ++i)
+for (i=0; i<N; ++i)
 {
     buffer[i*2] = CONST_DATA[i];
 }
