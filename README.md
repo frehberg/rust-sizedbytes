@@ -39,8 +39,10 @@ This feature is analog to the feature in C, where the function 'sizeof' is deriv
 ```C
 const char CONST_DATA[] = "0123456789"; // size 11, as nul-terminated
 /* equivalant to: char CONST_DATA[] = ['0','1','2','3','4','5','6','7','8','9', '\0'] */
-char buffer[sizeof(CONST_DATA) * 2];
-const int N = sizeof(CONST_DATA) - 1 ;
+const int N = sizeof(CONST_DATA) - 1;
+
+// allocate on stack, preset during compile time
+char buffer[N * 2];
 
 int i=0;
 for (i=0; i<N; ++i)
